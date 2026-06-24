@@ -1,0 +1,16 @@
+{
+  "id": "RISK_MAX_PER_TRADE",
+  "name": "Max 2% Capital Risk Per Trade",
+  "severity": "hard",
+  "scope": "trade.risk_pct",
+  "expression_type": "DSL",
+  "expression": {
+    "LTE": [
+      { "FIELD": "trade.risk_pct" },
+      0.02
+    ]
+  },
+  "human_text": "No single trade may risk more than 2% of total capital.",
+  "immutable": false,
+  "version": 1
+}

@@ -1,0 +1,16 @@
+{
+  "id": "NO_LEVERAGED_ETF",
+  "name": "No Leveraged ETF Trades",
+  "severity": "hard",
+  "scope": "trade.symbol",
+  "expression_type": "DSL",
+  "expression": {
+    "NOT_IN": [
+      { "FIELD": "trade.symbol" },
+      ["TQQQ", "SQQQ", "UPRO", "SPXU", "SOXL", "SOXS", "FAS", "FAZ"]
+    ]
+  },
+  "human_text": "Leveraged ETFs are not permitted in this IPT.",
+  "immutable": false,
+  "version": 1
+}

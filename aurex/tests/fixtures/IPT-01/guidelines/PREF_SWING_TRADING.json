@@ -1,0 +1,16 @@
+{
+  "id": "PREF_SWING_TRADING",
+  "name": "Prefer Swing Trading Holding Period",
+  "priority": 4,
+  "dimension": "holding_period",
+  "expression_type": "DSL",
+  "expression": {
+    "AND": [
+      { "GTE": [{ "FIELD": "trade.holding_period_days" }, 3] },
+      { "LTE": [{ "FIELD": "trade.holding_period_days" }, 14] }
+    ]
+  },
+  "human_text": "Hold positions between 3 and 14 days when possible.",
+  "user_editable": true,
+  "version": 1
+}

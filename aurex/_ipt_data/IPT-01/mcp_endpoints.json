@@ -1,0 +1,17 @@
+{
+  "ipt_id": "IPT-01",
+  "endpoints": {
+    "BROKER": {
+      "sandbox": "aurex.mcp.simulated.SimulatedBrokerMCP",
+      "real": null
+    },
+    "MARKET_DATA": {
+      "sandbox": "aurex.mcp.simulated.SimulatedMarketDataMCP",
+      "real": null
+    },
+    "NEWS": {
+      "sandbox": "aurex.mcp.simulated.SimulatedNewsMCP",
+      "real": null
+    }
+  }
+}

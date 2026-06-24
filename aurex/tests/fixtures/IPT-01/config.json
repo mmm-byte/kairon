@@ -1,0 +1,8 @@
+{
+  "ipt_id": "IPT-01",
+  "name": "Conservative Equities",
+  "mode": "SANDBOX",
+  "asset_universe": ["stocks", "etfs"],
+  "description": "Default conservative equities IPT with strict per-trade risk caps.",
+  "version": 1
+}

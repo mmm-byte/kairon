@@ -1,0 +1,16 @@
+{
+  "id": "PREF_TECH_TILT",
+  "name": "Prefer Technology Sector Tilt",
+  "priority": 5,
+  "dimension": "sector_allocation",
+  "expression_type": "DSL",
+  "expression": {
+    "GTE": [
+      { "FIELD": "portfolio.sector_weights.tech" },
+      { "FIELD": "portfolio.sector_weights.baseline_tech" }
+    ]
+  },
+  "human_text": "Maintain tech sector allocation at or above the baseline.",
+  "user_editable": true,
+  "version": 1
+}

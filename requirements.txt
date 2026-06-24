@@ -1,0 +1,33 @@
+# ── Core data ────────────────────────────────────────────────────────────────
+yfinance>=0.2.36
+pandas>=2.0.0
+numpy>=1.26.0
+
+# ── API & web ─────────────────────────────────────────────────────────────────
+fastapi>=0.109.0
+uvicorn>=0.27.0
+requests>=2.31.0
+
+# ── Database ──────────────────────────────────────────────────────────────────
+sqlalchemy>=2.0.25
+
+# ── News search ───────────────────────────────────────────────────────────────
+duckduckgo-search>=5.0.0
+feedparser>=6.0.0
+
+# ── Config & utils ────────────────────────────────────────────────────────────
+python-dotenv>=1.0.0
+apscheduler>=3.10.4
+
+# ── UI ────────────────────────────────────────────────────────────────────────
+streamlit>=1.32.0
+plotly>=5.18.0
+
+# ── Optional — install for enhanced features ──────────────────────────────────
+# chromadb>=0.4.22          # vector similarity search (better than numpy fallback)
+# fredapi>=0.5.1            # cleaner FRED integration
+# praw>=7.7.0               # Reddit social sentiment
+# openai>=1.10.0            # OpenAI LLM
+# anthropic>=0.14.0         # Anthropic LLM
+# torch>=2.1.0              # FinBERT sentiment model
+# transformers>=4.36.0      # FinBERT

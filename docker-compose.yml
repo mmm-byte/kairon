@@ -1,0 +1,99 @@
+version: "3.9"
+
+services:
+  # ── FastAPI backend ─────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: uvicorn kairon.api.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - kairon_data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:////app/data/kairon.db
+      - REDIS_URL=redis://redis:6379
+      - ENABLE_REDIS=true
+      - LOG_LEVEL=INFO
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── Streamlit UI ────────────────────────────────────────────────────────────
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: streamlit run kairon/ui/app.py --server.port 8501 --server.address 0.0.0.0 --server.headless true
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+      - kairon_data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:////app/data/kairon.db
+      - REDIS_URL=redis://redis:6379
+      - ENABLE_REDIS=true
+    env_file:
+      - .env
+    depends_on:
+      - api
+
+  # ── Background scheduler ────────────────────────────────────────────────────
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python -m kairon.data.scheduler
+    volumes:
+      - .:/app
+      - kairon_data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:////app/data/kairon.db
+      - REDIS_URL=redis://redis:6379
+      - ENABLE_REDIS=true
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  # ── Redis cache ─────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Ollama (local LLM) ──────────────────────────────────────────────────────
+  # Uncomment to run Ollama inside Docker (requires GPU passthrough for speed)
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_models:/root/.ollama
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - capabilities: [gpu]
+
+volumes:
+  kairon_data:
+  redis_data:
+  # ollama_models:
